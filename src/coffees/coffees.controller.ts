@@ -34,9 +34,19 @@ export class CoffeesController {
         return 'This action returns a #coffee' + id;
     }
 
+    // this another dynamic route
+    @Get(':id/flavors')
+    findOne2(@Param() params) {
+        return `This action returns #${params.id} coffee flavors`;
+    }
 
+
+    // handle prequest body
+    // @Body() is a decorator that extracts the body of the request and makes it available in the method
+    // the body is a JSON object that contains the data sent in the request
     @Post()
-    create(@Body() body : any) {
+    create(@Body() body : any) { // or @Body() body : { name: string, brand: string } Or @Body('name') name: string, @Body('brand') brand: string
+
         // const { name, brand } = body;
         // return 'This action creates a new coffee';
         return body;
