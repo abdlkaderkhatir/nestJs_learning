@@ -1,4 +1,5 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
+import { CoffeesService } from './coffees.service';
 
 //the command below will create a controller and a service
 // nest g co coffees --no-spec 
@@ -17,11 +18,16 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Q
 @Controller('coffees')
 export class CoffeesController {
 
+
+    constructor(private readonly coffeesService: CoffeesService) {}
+
     @Get('')
     findAll(@Res() res) { // or @Res() res: Response
-        res.status(200).json({ message: 'This action returns all coffees' });
+        // res.status(200).json({ message: 'This action returns all coffees' });
         // res.status(HttpStatus.OK).json({ message: 'This action returns all coffees' });
         // return 'This action returns all coffees';
+        // return this.coffeesService.findAll();
+        return res.status(HttpStatus.OK).json(this.coffeesService.findAll());
     }
 
     @Get('flavors')
@@ -37,7 +43,9 @@ export class CoffeesController {
     // the :id is a route parameter
     @Get(':id')
     findOne(@Param('id') id: string) { // or @Param() params : { id: string }
-        return 'This action returns a #coffee' + id;
+        // return 'This action returns a #coffee' + id;
+        return this.coffeesService.findOne(id);
+        // return this.coffeesService.findOne(params.id);
     }
 
     // this another dynamic route
@@ -56,7 +64,9 @@ export class CoffeesController {
 
         // const { name, brand } = body;
         // return 'This action creates a new coffee';
-        return body;
+        // return body;
+        return this.coffeesService.create(body);
+        // return this.coffeesService.create({ name, brand });
     }
 
 
@@ -71,7 +81,9 @@ export class CoffeesController {
 
     @Patch(':id')
     update(@Param('id') id: string, @Body() body: any) {
-        return `This action updates a #${id} coffee`;
+        // return `This action updates a #${id} coffee`;
+        // return this.coffeesService.update(id, body);
+        return this.coffeesService.update(id, body);
     }
 
     @Put(':id')
@@ -79,8 +91,10 @@ export class CoffeesController {
         return `This action updates a #${id} coffee`;
     }
 
-    // @Delete(':id')
-    // remove(@Param('id') id: string) {
-    //     return `This action removes a #${id} coffee`;
-    // }
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        // return `This action removes a #${id} coffee`;
+        // return this.coffeesService.remove(id);
+        return this.coffeesService.remove(id);
+    }
 }
