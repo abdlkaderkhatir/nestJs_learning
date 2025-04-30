@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
 
 //the command below will create a controller and a service
 // nest g co coffees --no-spec 
@@ -25,8 +25,12 @@ export class CoffeesController {
     }
 
     @Get('flavors')
-    findAll2() {
-        return 'This action returns all coffees';
+    findAll2(@Query() query) {
+        // query is an object that contains the query parameters sent in the request
+        // for example, if the request is GET /coffees/flavors?limit=10&offset=0
+        const { limit, offset } = query;
+        return `This action returns all coffees flavors with limit ${limit} and offset ${offset}`;
+        // return `This action returns all coffees flavors with limit ${query.limit} and offset ${query.offset}`;
     }
     
     // this is a dynamic route
