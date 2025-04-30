@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Res } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 
 //the command below will create a controller and a service
 // nest g co coffees --no-spec 
@@ -60,12 +62,12 @@ export class CoffeesController {
     // the body is a JSON object that contains the data sent in the request
     @Post()
     @HttpCode(HttpStatus.CREATED) // 201
-    create(@Body() body : any) { // or @Body() body : { name: string, brand: string } Or @Body('name') name: string, @Body('brand') brand: string
+    create(@Body() createCoffeeDto : CreateCoffeeDto) { // or @Body() body: any
 
         // const { name, brand } = body;
         // return 'This action creates a new coffee';
         // return body;
-        return this.coffeesService.create(body);
+        return this.coffeesService.create(createCoffeeDto);
         // return this.coffeesService.create({ name, brand });
     }
 
@@ -80,10 +82,10 @@ export class CoffeesController {
     // PATCH /coffees/1 { brand: "Nest" } - Only updates brand field
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() body: any) {
+    update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) { // or @Body() body: any
         // return `This action updates a #${id} coffee`;
         // return this.coffeesService.update(id, body);
-        return this.coffeesService.update(id, body);
+        return this.coffeesService.update(id, updateCoffeeDto);
     }
 
     @Put(':id')
