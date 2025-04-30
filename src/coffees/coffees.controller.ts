@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res } from '@nestjs/common';
 
 //the command below will create a controller and a service
 // nest g co coffees --no-spec 
@@ -18,8 +18,10 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 export class CoffeesController {
 
     @Get('')
-    findAll() {
-        return 'This action returns all coffees';
+    findAll(@Res() res) { // or @Res() res: Response
+        res.status(200).json({ message: 'This action returns all coffees' });
+        // res.status(HttpStatus.OK).json({ message: 'This action returns all coffees' });
+        // return 'This action returns all coffees';
     }
 
     @Get('flavors')
@@ -45,6 +47,7 @@ export class CoffeesController {
     // @Body() is a decorator that extracts the body of the request and makes it available in the method
     // the body is a JSON object that contains the data sent in the request
     @Post()
+    @HttpCode(HttpStatus.CREATED) // 201
     create(@Body() body : any) { // or @Body() body : { name: string, brand: string } Or @Body('name') name: string, @Body('brand') brand: string
 
         // const { name, brand } = body;
