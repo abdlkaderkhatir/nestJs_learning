@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from './entities/coffee.entity';
 
 // nest g service coffees --no-spec
@@ -39,8 +39,14 @@ export class CoffeesService {
     }
 
     findOne(id: string) {
-        return this.coffees.find((coffee) => coffee.id === +id);
         // return this.coffees.find((coffee) => coffee.id === parseInt(id, 10));
+        const existingCoffee = this.coffees.find((coffee) => coffee.id === +id);
+        if (!existingCoffee) {
+            // throw new HttpException(`Coffee #${id} not found`, HttpStatus.NOT_FOUND);
+            // there is also i nother helper exeption called NotFoundException
+            throw new NotFoundException(`Coffee #${id} not found`);
+        }
+        return existingCoffee;
     }
 
     create(coffee: any) {
