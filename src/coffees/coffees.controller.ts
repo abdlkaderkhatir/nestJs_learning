@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Res } from '@nestjs/common';
 
 //the command below will create a controller and a service
 // nest g co coffees --no-spec 
@@ -54,4 +54,29 @@ export class CoffeesController {
         // return 'This action creates a new coffee';
         return body;
     }
+
+
+
+
+    // PUT vs PATCH:
+    // PUT updates the entire resource and requires sending all fields
+    // PATCH performs a partial update, only sending changed fields
+    // Example:
+    // PUT /coffees/1 { name: "Black", brand: "Nest" } - Updates all fields
+    // PATCH /coffees/1 { brand: "Nest" } - Only updates brand field
+
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() body: any) {
+        return `This action updates a #${id} coffee`;
+    }
+
+    @Put(':id')
+    updateWithPut(@Param('id') id: string, @Body() body: any) {
+        return `This action updates a #${id} coffee`;
+    }
+
+    // @Delete(':id')
+    // remove(@Param('id') id: string) {
+    //     return `This action removes a #${id} coffee`;
+    // }
 }
