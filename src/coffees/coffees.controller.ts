@@ -44,9 +44,10 @@ export class CoffeesController {
     // this is a dynamic route
     // the :id is a route parameter
     @Get(':id')
-    findOne(@Param('id') id: string) { // or @Param() params : { id: string }
+    findOne(@Param('id') id: number) {
         // return 'This action returns a #coffee' + id;
-        return this.coffeesService.findOne(id);
+        console.log(typeof id); // number        
+        return this.coffeesService.findOne('' + id);
         // return this.coffeesService.findOne(params.id);
     }
 
@@ -67,6 +68,7 @@ export class CoffeesController {
         // const { name, brand } = body;
         // return 'This action creates a new coffee';
         // return body;
+        console.log(createCoffeeDto instanceof CreateCoffeeDto); // true
         return this.coffeesService.create(createCoffeeDto);
         // return this.coffeesService.create({ name, brand });
     }
