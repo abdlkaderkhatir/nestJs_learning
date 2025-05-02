@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { Response } from 'express';
 
 //the command below will create a controller and a service
 // nest g co coffees --no-spec 
@@ -23,13 +24,15 @@ export class CoffeesController {
 
     constructor(private readonly coffeesService: CoffeesService) {}
 
-    @Get('')
-    findAll(@Res() res) { // or @Res() res: Response
+    @Get() // or @Get('coffees')
+    findAll() { // or @Res() res: Response
         // res.status(200).json({ message: 'This action returns all coffees' });
         // res.status(HttpStatus.OK).json({ message: 'This action returns all coffees' });
         // return 'This action returns all coffees';
-        // return this.coffeesService.findAll();
-        return res.status(HttpStatus.OK).json(this.coffeesService.findAll());
+        return this.coffeesService.findAll();
+        // return res.status(HttpStatus.OK).send(this.coffeesService.findAll());
+        // const coffees = await this.coffeesService.findAll();
+        // return res.status(HttpStatus.OK).json({coffees});
     }
 
     @Get('flavors')
