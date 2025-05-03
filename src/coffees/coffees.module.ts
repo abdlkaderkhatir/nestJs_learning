@@ -4,11 +4,12 @@ import { CoffeesController } from './coffees.controller';
 import { Type } from 'class-transformer';
 import { Coffee } from './entities/coffee.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Flavor } from './entities/flavor.entity';
 
 // nest g mo coffees --no-spec
 // the command above will create a module and a spec file for the module
 @Module({
-    imports: [TypeOrmModule.forFeature([Coffee])], // Import the TypeOrmModule and register the Coffee entity
+    imports: [TypeOrmModule.forFeature([Coffee , Flavor])], // Import the TypeOrmModule and register the Coffee entity
     controllers: [CoffeesController],
     providers: [CoffeesService],
     exports: [],

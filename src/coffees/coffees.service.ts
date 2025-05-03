@@ -46,7 +46,9 @@ export class CoffeesService {
     
     findAll() {
         // return this.coffees;
-        return this.coffeesRepository.find();
+        return this.coffeesRepository.find({
+            relations: ['flavors'], // this will load the flavors relation for each coffee
+        });
     }
 
     async findOne(id: string) {
@@ -60,7 +62,10 @@ export class CoffeesService {
         // }
         // return existingCoffee;
         //Version 2
-         const coffee = await this.coffeesRepository.findOne({ where: { id: +id } });
+         const coffee = await this.coffeesRepository.findOne({ 
+            where: { id: +id },
+            relations: ['flavors']
+         });
          if (!coffee) {
                 throw new NotFoundException(`Coffee #${id} not found`);
             }
